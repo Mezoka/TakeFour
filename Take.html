@@ -1,0 +1,745 @@
+<html>
+<body style="margin: 0">
+<canvas></canvas>
+
+<script>
+const canvas = document.querySelector("canvas")
+
+const store = [[
+1, 1, 0, 1, 1, 1, 1, 1, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 1, 0, 0, 1, 
+0, 0, 0, 1, 1, 0, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 1, 1, 1, 1, 0, 
+0, 0, 1, 1, 1, 0, 1, 1, 
+], [
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 1, 1, 0, 1, 0, 1, 1, 
+0, 0, 1, 0, 1, 0, 0, 0, 
+0, 0, 1, 0, 1, 0, 0, 0, 
+0, 0, 0, 1, 1, 1, 1, 1, 
+1, 0, 1, 0, 1, 1, 0, 1, 
+0, 0, 1, 0, 1, 0, 0, 1, 
+], [
+0, 1, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 1, 1, 0, 0, 0, 
+0, 0, 0, 1, 0, 0, 1, 0, 
+0, 1, 1, 1, 1, 1, 1, 0, 
+0, 1, 0, 0, 1, 0, 0, 0, 
+0, 1, 0, 0, 1, 0, 1, 0, 
+0, 1, 0, 0, 0, 0, 1, 0, 
+1, 0, 0, 1, 1, 0, 1, 1, 
+], [
+0, 0, 0, 1, 1, 0, 0, 0, 
+0, 0, 0, 0, 1, 1, 0, 0, 
+0, 0, 1, 0, 1, 1, 1, 1, 
+0, 0, 0, 1, 0, 1, 0, 0, 
+1, 1, 0, 1, 1, 1, 0, 1, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+], [
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 1, 1, 1, 0, 1, 1, 
+1, 1, 0, 1, 0, 1, 1, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 1, 1, 1, 1, 0, 1, 0, 
+0, 1, 0, 0, 0, 0, 1, 0, 
+], [
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 1, 1, 1, 0, 0, 1, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+1, 1, 0, 1, 0, 1, 1, 0, 
+1, 0, 1, 1, 1, 0, 1, 0, 
+0, 1, 0, 1, 1, 1, 0, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+], [
+0, 0, 0, 0, 1, 0, 1, 0, 
+0, 1, 1, 1, 1, 0, 1, 0, 
+0, 0, 0, 0, 1, 0, 0, 1, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 0, 0, 1, 1, 0, 1, 1, 
+0, 0, 0, 0, 1, 0, 0, 1, 
+0, 1, 0, 0, 1, 1, 1, 1, 
+0, 0, 0, 0, 0, 0, 1, 1, 
+], [
+1, 0, 1, 0, 0, 1, 1, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+1, 1, 1, 1, 0, 0, 0, 1, 
+1, 0, 1, 0, 1, 1, 0, 1, 
+0, 0, 1, 0, 1, 1, 1, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+], [
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 1, 1, 1, 0, 1, 1, 
+0, 1, 0, 0, 1, 0, 1, 0, 
+0, 1, 0, 0, 1, 0, 1, 0, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+1, 1, 0, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 1, 1, 0, 0, 0, 
+], [
+0, 1, 0, 0, 0, 1, 0, 0, 
+1, 1, 1, 0, 1, 0, 1, 1, 
+0, 0, 0, 0, 0, 1, 1, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 1, 1, 1, 0, 1, 1, 1, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+1, 1, 0, 0, 0, 1, 1, 1, 
+], [
+1, 0, 0, 1, 0, 0, 1, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+1, 0, 0, 1, 1, 1, 1, 0, 
+0, 1, 1, 1, 0, 0, 1, 1, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+1, 1, 1, 1, 0, 0, 1, 0, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+1, 0, 0, 1, 0, 0, 1, 0, 
+], [
+1, 1, 1, 0, 1, 1, 0, 1, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+1, 1, 1, 0, 0, 1, 1, 1, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 1, 0, 0, 0, 0, 0, 
+1, 1, 1, 1, 1, 0, 0, 1, 
+], [
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 1, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+1, 1, 0, 0, 1, 1, 1, 1, 
+0, 0, 0, 0, 1, 1, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 1, 
+], [
+0, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+0, 1, 1, 1, 0, 0, 1, 1, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 1, 0, 1, 0, 0, 1, 1, 
+0, 1, 0, 1, 0, 0, 1, 0, 
+], [
+1, 0, 0, 0, 0, 1, 0, 0, 
+1, 0, 0, 0, 0, 1, 0, 0, 
+1, 0, 1, 0, 0, 0, 0, 0, 
+1, 1, 1, 1, 0, 1, 0, 0, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+1, 1, 1, 0, 0, 1, 0, 1, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+1, 0, 1, 0, 1, 1, 1, 0, 
+], [
+0, 0, 0, 0, 0, 1, 0, 0, 
+1, 0, 0, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 0, 1, 0, 1, 1, 1, 1, 
+1, 0, 0, 0, 0, 1, 0, 0, 
+1, 1, 0, 0, 1, 1, 1, 1, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 0, 0, 0, 0, 1, 0, 0, 
+], [
+1, 1, 0, 1, 1, 0, 0, 1, 
+1, 0, 0, 1, 1, 1, 1, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 1, 1, 1, 0, 1, 1, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 1, 1, 0, 1, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+], [
+0, 1, 0, 0, 0, 0, 0, 0, 
+1, 1, 1, 0, 0, 0, 1, 1, 
+0, 1, 0, 0, 0, 0, 1, 0, 
+1, 1, 1, 1, 1, 0, 1, 0, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 1, 0, 1, 1, 1, 1, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 1, 0, 0, 0, 1, 0, 
+], [
+1, 0, 0, 1, 0, 1, 1, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+1, 0, 0, 1, 0, 1, 0, 0, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+0, 1, 1, 1, 0, 1, 0, 1, 
+1, 0, 0, 1, 1, 1, 1, 0, 
+1, 0, 0, 1, 0, 1, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+], [
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 1, 0, 1, 0, 
+0, 0, 0, 0, 1, 0, 1, 0, 
+0, 0, 1, 1, 1, 0, 1, 1, 
+0, 0, 1, 0, 1, 1, 1, 1, 
+0, 0, 1, 0, 1, 0, 1, 0, 
+1, 1, 0, 0, 1, 1, 1, 0, 
+], [
+0, 0, 0, 0, 0, 1, 0, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 1, 1, 1, 1, 0, 1, 
+1, 1, 0, 1, 0, 1, 1, 1, 
+0, 0, 0, 1, 0, 1, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 1, 
+1, 0, 1, 1, 0, 1, 0, 1, 
+], [
+0, 1, 1, 0, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 1, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+1, 1, 1, 1, 1, 0, 1, 0, 
+0, 0, 1, 0, 1, 0, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+], [
+0, 0, 1, 1, 0, 1, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 1, 1, 0, 1, 0, 0, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+1, 0, 1, 1, 0, 1, 0, 1, 
+], [
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 1, 1, 0, 
+1, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 1, 1, 0, 0, 1, 1, 1, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+1, 1, 0, 0, 0, 1, 1, 1, 
+], [
+0, 0, 1, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 1, 0, 0, 1, 
+1, 0, 1, 0, 1, 1, 1, 1, 
+1, 0, 1, 1, 1, 1, 0, 1, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+0, 1, 1, 0, 1, 1, 0, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+], [
+1, 0, 1, 0, 0, 0, 1, 0, 
+1, 0, 1, 1, 0, 0, 0, 0, 
+0, 0, 0, 1, 0, 0, 1, 0, 
+0, 0, 1, 1, 0, 0, 0, 0, 
+1, 0, 1, 1, 1, 1, 1, 0, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+0, 1, 1, 1, 0, 0, 1, 1, 
+1, 0, 0, 0, 0, 0, 1, 0, 
+], [
+0, 0, 0, 0, 0, 1, 0, 0, 
+1, 0, 1, 0, 0, 1, 0, 0, 
+1, 1, 1, 0, 0, 1, 1, 0, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+1, 1, 1, 0, 0, 1, 0, 1, 
+1, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 1, 1, 1, 1, 0, 1, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+], [
+0, 0, 0, 1, 0, 1, 0, 0, 
+0, 1, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+1, 1, 1, 1, 0, 1, 0, 1, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 0, 1, 1, 0, 1, 1, 1, 
+], [
+0, 0, 0, 0, 0, 1, 1, 0, 
+0, 1, 0, 0, 0, 0, 1, 0, 
+1, 1, 1, 0, 0, 1, 1, 1, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 1, 0, 1, 1, 1, 1, 1, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+1, 1, 0, 0, 0, 1, 1, 1, 
+], [
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 0, 1, 0, 0, 1, 0, 1, 
+1, 0, 1, 0, 0, 1, 1, 1, 
+1, 1, 1, 0, 0, 1, 0, 1, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+0, 0, 1, 0, 0, 1, 0, 1, 
+0, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+], [
+0, 0, 0, 0, 0, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 1, 1, 1, 0, 1, 1, 0, 
+0, 0, 0, 1, 0, 1, 0, 0, 
+1, 0, 0, 1, 1, 1, 1, 1, 
+0, 1, 1, 1, 0, 1, 1, 0, 
+0, 0, 0, 1, 0, 1, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+], [
+0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+1, 1, 1, 0, 0, 1, 0, 1, 
+1, 0, 1, 0, 1, 0, 1, 1, 
+1, 0, 1, 1, 0, 1, 0, 1, 
+0, 0, 0, 0, 0, 1, 0, 1, 
+0, 0, 1, 0, 0, 1, 0, 0, 
+], [
+0, 0, 0, 0, 1, 0, 0, 0, 
+1, 0, 1, 0, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 1, 0, 0, 0, 0, 0, 
+1, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+0, 1, 1, 0, 1, 1, 1, 1, 
+0, 0, 1, 0, 1, 0, 1, 0, 
+], [
+0, 1, 0, 1, 0, 1, 0, 0, 
+1, 1, 0, 1, 0, 1, 1, 1, 
+0, 1, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 0, 1, 1, 1, 1, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+], [
+0, 0, 0, 1, 0, 1, 0, 0, 
+0, 1, 0, 1, 0, 1, 1, 1, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+1, 0, 0, 1, 1, 1, 1, 0, 
+0, 1, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 0, 0, 1, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+0, 1, 1, 1, 0, 1, 0, 1, 
+], [
+1, 1, 0, 1, 1, 1, 0, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+1, 0, 1, 1, 0, 1, 1, 1, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 1, 
+1, 0, 0, 1, 1, 1, 1, 1, 
+0, 0, 0, 0, 0, 1, 0, 1, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+], [
+0, 1, 0, 0, 0, 0, 0, 0, 
+0, 1, 1, 1, 0, 1, 1, 1, 
+0, 0, 0, 1, 0, 1, 0, 0, 
+0, 0, 0, 1, 0, 0, 0, 0, 
+0, 1, 0, 1, 1, 1, 0, 1, 
+1, 1, 0, 1, 0, 1, 1, 0, 
+0, 1, 0, 1, 0, 1, 0, 0, 
+0, 0, 0, 0, 0, 1, 0, 0, 
+], [
+1, 0, 0, 0, 1, 0, 0, 1, 
+1, 0, 1, 0, 1, 1, 0, 1, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+1, 1, 0, 0, 1, 1, 0, 1, 
+1, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 1, 0, 0, 1, 
+0, 0, 0, 0, 1, 0, 0, 0, 
+1, 0, 0, 1, 1, 0, 1, 1, 
+], [
+1, 0, 0, 1, 0, 0, 1, 0, 
+1, 0, 0, 1, 0, 0, 0, 0, 
+1, 0, 0, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+1, 1, 1, 1, 0, 0, 1, 0, 
+1, 0, 0, 0, 0, 0, 0, 0, 
+1, 1, 0, 1, 0, 0, 1, 1, 
+0, 0, 0, 1, 0, 0, 1, 0, 
+], [
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 0, 0, 0, 0, 1, 0, 
+0, 0, 1, 0, 1, 0, 0, 0, 
+0, 0, 1, 1, 1, 1, 1, 0, 
+0, 0, 0, 0, 1, 0, 1, 0, 
+0, 0, 1, 0, 1, 1, 1, 1, 
+1, 1, 1, 0, 1, 0, 1, 0, 
+0, 0, 1, 0, 1, 0, 1, 0, 
+]]
+
+var board = []
+var select = []
+var last = 0
+var clear = false
+
+var width, height
+var rect, button
+
+init()
+
+window.onresize = resize
+resize()
+
+canvas.addEventListener("click", clickBoard)
+
+function init() {
+    var k = []
+    var total = store.length
+
+    for (let i = 0; i < total; i++) k.push(i)
+
+    for (let i = k.length - 1; i > 0; i--) { // shuffle
+        let j = Math.floor(Math.random() * (i + 1));
+        [k[i], k[j]] = [k[j], k[i]]
+    }
+
+    for (let i = 0; i < total; i++) {
+        board.push({table: [], total: 0, history: [], last: 0})
+        board[i].table = store[k[i]]
+
+        for (let j = board[i].table.length - 1; j >= 0; j--)
+            if (board[i].table[j] == 1) board[i].total++
+
+        let n = Math.floor(Math.random() * 8)
+
+        if (n >= 4) {
+            board[i].table = flip(board[i].table)
+            n -= 4
+        }
+
+        for (let j = 0; j < n; j++)
+            board[i].table = rotate(board[i].table)
+    }
+}
+
+function flip(table) {
+    var list = []
+
+    for (let y = 0, j = 7; y < 8; y++, j += 8) {
+        for (let x = 0, i = j; x < 8; x++, i--) {
+            list.push(table[i])
+        }
+    }
+
+    return list
+}
+
+function rotate(table) {
+    var list = []
+
+    for (let y = 0, j = 7; y < 8; y++, j--) {
+        for (let x = 0, i = j; x < 8; x++, i += 8) {
+            list.push(table[i])
+        }
+    }
+
+    return list
+}
+
+function resize() {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+
+    let pad = 2
+    let CW = canvas.width - 7 * pad
+    let CH = canvas.height - 7 * pad
+
+    if (CW * 10 >= CH * 9)
+        width = Math.floor(CH / 10)
+    else width = Math.floor(CW / 9)
+
+    let space = Math.floor(width * 0.2)
+    height = Math.floor(width * 0.74)
+
+    rect = []
+    rect.push({x: Math.floor((canvas.width - 8 * width - 7 * pad) / 2),
+        y: Math.floor((canvas.height - 8 * width - 7 * pad) / 2) - Math.floor(width * 0.5)})
+
+    for (let i = 1, j = 0; i <= 8; j = i++)
+        rect.push({x: rect[j].x + width + pad, y: rect[j].y + width + pad})
+
+    button = []
+    button.push({x: Math.floor((canvas.width - 6 * height - 5 * space) / 2),
+        y: rect[8].y + Math.floor(width * 0.3)})
+
+    for (let i = 1, j = 0; i <= 6; j = i++)
+        button.push({x: button[j].x + height + space, y: button[j].y})
+
+    var context = canvas.getContext("2d")
+    context.fillStyle = "#222230"
+    context.fillRect(0, 0, canvas.width, canvas.height)
+
+    for (let i = 0; i < 64; i++)
+        drawCell(i)
+
+    drawButton()
+}
+
+function drawCell(i, high = false) {
+    let x = (i & 7)
+    let y = (i >> 3)
+
+    var value = board[last].table[i]
+    var context = canvas.getContext("2d")
+    context.fillStyle = "#9999D9"
+    context.fillRect(rect[x].x, rect[y].y, width, width)
+
+    if ((value > 0) || high) {
+        context.beginPath()
+        context.arc(rect[x].x + width / 2, rect[y].y + width / 2, width * 0.42, 0, 2 * Math.PI)
+
+        if ((value != 2) || high) {
+            context.fillStyle = (high) ? "orange" : "blue"
+            context.fill()
+        }
+
+        context.lineWidth = 2
+        context.strokeStyle = "black"
+        context.stroke()
+    }
+}
+
+function drawButton() {
+    var context = canvas.getContext("2d")
+    context.lineWidth = height * 0.05
+    context.lineJoin = "round"
+
+    for (let i = 0; i < 6; i++) {
+        context.fillStyle = "lightblue"
+        context.fillRect(button[i].x, button[i].y, height, height)
+        let color
+
+        if (i == 0 || i == 5) color =
+            clear ? "red" : "black"
+        else if (i == 1 || i == 2) color =
+            (board[last].last > 0) ? "black" : "#808080"
+        else if (i == 3 || i == 4) color =
+            (board[last].last < board[last].history.length) ? "black" : "#808080"
+
+        if (i == 0 || i == 2) {
+            context.beginPath()
+            context.moveTo(button[i].x + height * 0.66, button[i].y + height * 0.25)
+            context.lineTo(button[i].x + height * 0.26, button[i].y + height * 0.5)
+            context.lineTo(button[i].x + height * 0.66, button[i].y + height * 0.75)
+            context.closePath()
+            context.fillStyle = color
+            context.fill()
+            context.strokeStyle = color
+            context.stroke()
+        }
+        else if (i == 3 || i == 5) {
+            context.beginPath()
+            context.moveTo(button[i].x + height * 0.35, button[i].y + height * 0.25)
+            context.lineTo(button[i].x + height * 0.75, button[i].y + height * 0.5)
+            context.lineTo(button[i].x + height * 0.35, button[i].y + height * 0.75)
+            context.closePath()
+            context.fillStyle = color
+            context.fill()
+            context.strokeStyle = color
+            context.stroke()
+        }
+        else if (i == 1) {
+            context.beginPath()
+            context.moveTo(button[i].x + height * 0.72, button[i].y + height * 0.28)
+            context.lineTo(button[i].x + height * 0.39, button[i].y + height * 0.5)
+            context.lineTo(button[i].x + height * 0.72, button[i].y + height * 0.72)
+            context.closePath()
+            context.fillStyle = color
+            context.fill()
+            context.strokeStyle = color
+            context.stroke()
+
+            context.beginPath()
+            context.rect(button[i].x + height * 0.25, button[i].y + height * 0.26, height * 0.1, height * 0.48)
+            context.fill()
+        }
+        else if (i == 4) {
+            context.beginPath()
+            context.moveTo(button[i].x + height * 0.28, button[i].y + height * 0.28)
+            context.lineTo(button[i].x + height * 0.61, button[i].y + height * 0.5)
+            context.lineTo(button[i].x + height * 0.28, button[i].y + height * 0.72)
+            context.closePath()
+            context.fillStyle = color
+            context.fill()
+            context.strokeStyle = color
+            context.stroke()
+
+            context.beginPath()
+            context.rect(button[i].x + height * 0.65, button[i].y + height * 0.26, height * 0.1, height * 0.48)
+            context.fill()
+        }
+    }
+
+    clear = false
+}
+
+function clickBoard(event) {
+    let x = -1, y = -1
+
+    if (event.clientX >= rect[0].x && event.clientY >= rect[0].y) {
+        for (let i = 0; i < 8; i++) {
+            if (event.clientX < rect[i + 1].x) {
+                x = i
+                break
+            }
+        }
+
+        for (let i = 0; i < 8; i++) {
+            if (event.clientY < rect[i + 1].y) {
+                y = i
+                break
+            }
+        }
+
+        if (x >= 0 && y >= 0) {
+            click(x | (y << 3))
+            return
+        }
+    }
+
+    if (event.clientY >= button[0].y && event.clientY < button[0].y + height) {
+        for (let i = 0; i < 6; i++) {
+            if (event.clientX >= button[i].x && event.clientX < button[i].x + height) {
+                clickButton(i)
+                break
+            }
+        }
+    }
+}
+
+function click(i) {
+    if (board[last].table[i] == 1) {
+        if (select.length) {
+            if (i == select[0]) { // same cell
+                select = []
+                drawCell(i)
+            }
+            else { // check four
+                let count = []
+                let a, b
+
+                if (i > select[0]) {
+                    b = i
+                    a = select[0]
+                }
+                else {
+                    a = i
+                    b = select[0]
+                }
+
+                if ((a >> 3) == (b >> 3)) { // same row
+                    for (let k = a; k <= b; k++) {
+                        if (board[last].table[k] == 1) count.push(k)
+                    }
+                }
+                else if ((a & 7) == (b & 7)) { // same column
+                    for (let k = a; k <= b; k = k + 8) {
+                        if (board[last].table[k] == 1) count.push(k)
+                    }
+                }
+
+                if (count.length == 4) {
+                    select = []
+
+                    if (board[last].last < board[last].history.length)
+                        board[last].history.splice(board[last].last, board[last].history.length - board[last].last) // cut behind
+
+                    board[last].history.push(...count)
+                    board[last].last += 4
+
+                    for (let k = 0; k < 4; k++) {
+                        board[last].table[count[k]] = 2
+                        drawCell(count[k], true)
+                    }
+
+                    setTimeout(function() {
+                        for (let k = 0; k < 4; k++) drawCell(count[k])
+                        if (board[last].history.length == board[last].total) clear = true
+                        drawButton()
+                    }, 700)
+                }
+                else {
+                    drawCell(select[0])
+                    drawCell(i, true)
+                    select[0] = i
+                }
+            }
+        }
+        else { // no select
+            select.push(i)
+            drawCell(i, true)
+        }
+    }
+}
+
+function clickButton(i) {
+    if (i == 1) { // start
+        if (board[last].last > 0) {
+            for (let n = board[last].last - 1; n >= 0; n--) {
+                let k = board[last].history[n]
+                board[last].table[k] = 1 // put coin
+                drawCell(k)
+            }
+
+            board[last].last = 0
+        }
+    }
+    else if (i == 4) { // end
+        if (board[last].last < board[last].history.length) {
+            for (let n = board[last].last; n < board[last].history.length; n++) {
+                let k = board[last].history[n]
+                board[last].table[k] = 2 // remove coin
+                drawCell(k)
+            }
+
+            board[last].last = board[last].history.length
+        }
+    }
+    else if (i == 2) { // back
+        if (board[last].last > 0) {
+            for (let n = board[last].last - 4; n < board[last].last; n++) {
+                let k = board[last].history[n]
+                board[last].table[k] = 1 // put coin
+                drawCell(k)
+            }
+
+            board[last].last -= 4
+        }
+    }
+    else if (i == 3) { // next
+        if (board[last].last < board[last].history.length) {
+            for (let n = board[last].last + 3; n >= board[last].last; n--) {
+                let k = board[last].history[n]
+                board[last].table[k] = 2 // remove coin
+                drawCell(k)
+            }
+
+            board[last].last += 4
+        }
+    }
+    else if (i == 0) {
+        select = []
+        last--
+        if (last < 0) last += board.length
+        for (let k = 0; k < 64; k++)
+            drawCell(k)
+    }
+    else if (i == 5) {
+        select = []
+        last++
+        if (last >= board.length) last = 0
+        for (let k = 0; k < 64; k++)
+            drawCell(k)
+    }
+
+    if (select.length) {
+        drawCell(select[0])
+        select = []
+    }
+
+    drawButton()
+}
+
+</script>
+</body>
+</html>
