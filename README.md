@@ -13,4 +13,4 @@ One player board game written in JavaScript
 
 - repeat until all conis are taken
 
-[Play Take Four](https://mezoka.github.io/TakeFour)
+### [Play Take Four](https://mezoka.github.io/TakeFour)
